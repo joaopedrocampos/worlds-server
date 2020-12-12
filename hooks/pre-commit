@@ -1,0 +1,23 @@
+#!/usr/bin/env sh
+
+# .git/hooks/pre-push
+# hook to force tests and prevent failing pushs
+#
+# Refs:
+# http://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks
+# http://blog.ittybittyapps.com/blog/2013/09/03/git-pre-push/
+#
+# Bypassing the pre-push hook:
+# git push --no-verify
+
+echo 'Running lint before commit'
+
+LINT='npm run lint' # Command that runs lint
+
+$LINT
+LINT=$?
+if [ $LINT -ne 0 ]; then
+    echo ' \033[41;1;37m[Failed]\033[0m'
+    exit 1
+fi
+    echo ' \033[42;1;37m[Passed]\033[0m'

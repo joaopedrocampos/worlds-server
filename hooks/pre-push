@@ -1,0 +1,32 @@
+#!/usr/bin/env sh
+
+# .git/hooks/pre-push
+# hook to force tests and prevent failing pushs
+#
+# Refs:
+# http://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks
+# http://blog.ittybittyapps.com/blog/2013/09/03/git-pre-push/
+#
+# Bypassing the pre-push hook:
+# git push --no-verify
+
+echo 'Running tests before push'
+
+TEST='npm run test' # Command that run your tests
+
+# Check if we actually have commits to push
+
+commits='git log @{u}...'
+if [ -z '$commits' ]; then
+    echo 'No commits to push...'
+
+    exit 0
+fi
+
+# Backtend tests
+$TEST
+RESULT=$?
+if [ $RESULT -ne 0 ]; then
+    echo " \033[41;1;37m[Failed tests]\033[0m \"$TEST_BACK\""
+    exit 1
+fi

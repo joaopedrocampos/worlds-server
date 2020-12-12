@@ -19,11 +19,33 @@ jobs:
             - name: Install Dependencies
               run: npm install
 
+            - name: Check node version
+              run: npm run check-node-version
+
             - name: Set node_modules on cache
               uses: actions/cache@v1
               with:
                   path: node_modules
                   key: ${{ runner.os }}-node-${{ github.sha }}
+
+    test:
+        name: Unit Tests
+        runs-on: ubuntu-latest
+        needs: [install]
+        env:
+            NODE_ENV: test
+        steps:
+            - name: Checkout Repo
+              uses: actions/checkout@master
+
+            - name: Get node_modules from cache
+              uses: actions/cache@v1
+              with:
+                  path: node_modules
+                  key: ${{ runner.os }}-node-${{ github.sha }}
+
+            - name: Tests
+              run: npm run test
 
     lint:
         name: Lint

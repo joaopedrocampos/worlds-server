@@ -7,8 +7,6 @@ async function getWorldHandler(request, reply) {
 
         reply.code(200).send(world);
     } catch (error) {
-        console.error(error);
-
         reply.code(500).send(error);
     }
 }

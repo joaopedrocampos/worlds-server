@@ -1,25 +1,18 @@
-const fastify = require('fastify');
-const mongoose = require('mongoose');
+const { startServer } = require('./src/server');
 
-const app = fastify();
+(async function runServer() {
+    try {
+        const fastify = await startServer();
 
-const worldRoutes = require('./src/routes/worldRoutes');
+        console.log(
+            `Server listening at ${fastify.server.address().address}:${
+                fastify.server.address().port
+            }`
+        );
 
-// connection on database
-try {
-    mongoose.connect('mongodb://localhost:27017/worlds');
-} catch (e) {
-    console.error(e);
-}
-
-worldRoutes(app);
-
-// starting application on port 5000
-app.listen(5000, (err, address) => {
-    if (err) {
+        console.log(fastify.printRoutes());
+    } catch (err) {
         console.error(err);
         process.exit(1);
     }
-
-    console.log(`Server running on port ${5000}`);
-});
+})();

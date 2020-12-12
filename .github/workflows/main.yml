@@ -1,0 +1,22 @@
+name: CI
+
+on:
+    # Triggers the workflow on push or pull request events but only for the main branch
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+
+jobs:
+    lint:
+        name: Lint
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Repo
+              uses: actions/checkout@master
+
+            - name: Install Dependencies
+              run: npm install
+
+            - name: Lint
+              run: npm run lint

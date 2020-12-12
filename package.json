@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "config": "^3.3.3",
     "fastify": "^3.9.1",
     "mongoose": "^5.11.7"
   },

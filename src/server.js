@@ -1,3 +1,4 @@
+const config = require('config');
 const fastify = require('fastify')({
     ignoreTrailingSlash: true,
 });
@@ -35,7 +36,10 @@ function setGlobalHooks() {
 
 function connectDatabase() {
     try {
-        mongoose.connect('mongodb://ae_natan:mudar1234@localhost:27017/worlds');
+        const { user, password, host, port } = config.get('database');
+        const connectionString = `mongodb://${user}:${password}@${host}:${port}/worlds`;
+
+        mongoose.connect(connectionString);
     } catch (e) {
         console.error(e);
 
@@ -53,7 +57,7 @@ async function startServer() {
 
         registerRoutes();
 
-        await fastify.listen(5000, '0.0.0.0');
+        await fastify.listen(config.get('server.port'), '0.0.0.0');
 
         return fastify;
     } catch (error) {

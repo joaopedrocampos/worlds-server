@@ -6,7 +6,10 @@
   "scripts": {
     "start": "node index.js",
     "check-node-version": "./node_modules/check-node-version/bin.js --node '>= 10'",
-    "test": "NODE_ENV=test jest -c jest.config.js --runInBand --detectOpenHandles --forceExit --coverage",
+    "test": "jest -c jest.config.js --runInBand --detectOpenHandles --forceExit",
+    "test:watch": "jest --watchAll=true -c jest.config.js --detectOpenHandles",
+    "coverage": "jest -c jest.config.js --runInBand --detectOpenHandles --forceExit --collectCoverageFrom=src/**/*.js --coverage",
+    "coverage:html": "npm run coverage && ./node_modules/node-static/bin/cli.js --port 5000 coverage/lcov-report",
     "lint": "./node_modules/prettier/bin-prettier.js --check \"src/**/*.js\""
   },
   "keywords": [],
@@ -22,6 +25,7 @@
     "@types/jest": "^26.0.19",
     "check-node-version": "^4.0.3",
     "jest": "^26.6.3",
+    "node-static": "^0.7.11",
     "prettier": "^2.2.1"
   }
 }

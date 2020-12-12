@@ -11,8 +11,6 @@ async function updateWorldHandler(request, reply) {
 
         reply.code(200).send({ data: updatedWorld });
     } catch (error) {
-        console.error(error);
-
         reply.code(500).send(error);
     }
 }

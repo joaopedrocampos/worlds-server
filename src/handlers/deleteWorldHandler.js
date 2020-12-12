@@ -8,8 +8,6 @@ async function deleteWorldHandler(request, reply) {
 
         reply.code(204).send();
     } catch (error) {
-        console.error(error);
-
         reply.code(500).send(error);
     }
 }

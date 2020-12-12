@@ -34,6 +34,7 @@ jobs:
         needs: [install]
         env:
             NODE_ENV: test
+
         steps:
             - name: Checkout Repo
               uses: actions/checkout@master
@@ -44,8 +45,18 @@ jobs:
                   path: node_modules
                   key: ${{ runner.os }}-node-${{ github.sha }}
 
+            - name: Build
+              run: sudo docker-compose up -d
+
             - name: Tests
-              run: npm run test
+              run: npm run coverage
+
+            - uses: codecov/codecov-action@v1
+              with:
+                  name: code-coverage
+                  fail_ci_if_error: true
+                  verbose: true
+                  file: ./coverage/lcov.info
 
     lint:
         name: Lint

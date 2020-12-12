@@ -1,4 +1,5 @@
 const { startServer, closeServer } = require('../../server');
+const mongoose = require('mongoose');
 
 describe('Create World Handler', () => {
     let server;
@@ -8,7 +9,11 @@ describe('Create World Handler', () => {
     });
 
     afterAll(async () => {
+        const worlds = mongoose.connection.collection('worlds');
+
+        await worlds.deleteMany({});
         await closeServer();
+        await mongoose.connection.close();
     });
 
     describe('When world data is valid', () => {

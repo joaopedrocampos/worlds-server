@@ -6,8 +6,6 @@ async function listWorldsHandler(request, reply) {
 
         reply.code(200).send(worlds);
     } catch (error) {
-        console.error(error);
-
         reply.code(500).send(error);
     }
 }

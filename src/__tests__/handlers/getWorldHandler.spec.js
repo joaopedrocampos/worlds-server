@@ -20,6 +20,9 @@ describe('Get World Handler', () => {
     });
 
     afterAll(async () => {
+        const worlds = mongoose.connection.collection('worlds');
+
+        await worlds.deleteMany({});
         await closeServer();
         await mongoose.connection.close();
     });
